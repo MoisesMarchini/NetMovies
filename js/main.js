@@ -50,12 +50,15 @@ const carouselItemQuerySelectorName = '.carousel-item';
 const carouselProgressItemQuerySelectorName = '.progress-item';
 
 const allCarouselSection = document.querySelectorAll(carouselSectionQuerySelectorName)
+const maxItemsPerCarousel = 20;
+
 let itensOnScreen;
 
 let carouselSection;
 let carouselWrapper;
 let carousel;
 let carouselItems;
+let carouselItemHeight;
 let carouselProgressItem;
 let timerOut = true;
 
@@ -63,41 +66,58 @@ window.addEventListener('resize', () => {
     RefreshWindowSize();
     LoadImages();
 })
+carouselItems = document.querySelectorAll(carouselItemQuerySelectorName + ' img')
+
+carouselItems.forEach((item) => {
+    item.src = ' ';
+});
+
 
 function RefreshWindowSize() {
     allCarouselSection.forEach((section, sectionIndex) => {
         carouselProgressItem = section.querySelectorAll(carouselProgressItemQuerySelectorName)
         carousel = section.querySelectorAll(carouselQuerySelectorName)
+        carouselWrapper = section.querySelector(carouselWrapperQuerySelectorName)
 
 
         itensOnScreen = getComputedStyle(carousel[0]).getPropertyValue('--carousel-item-on-screen')
-
-        carouselProgressItem.forEach((progressIndicator, index) => {
-
-            if (index >= carousel.length)
-                progressIndicator.classList.add('inactive')
-        })
+        carouselItemHeight = getComputedStyle(carousel[0]).height;
 
 
         carousel.forEach((carouselElement, carouselIndex) => {
-
             carouselItems = carouselElement.querySelectorAll(carouselItemQuerySelectorName)
+
 
             carouselItems.forEach((item, index) => {
                 item.classList.remove('inactive')
                 item.classList.remove('active')
 
-
-                if (index >= itensOnScreen)
+                if (index >= itensOnScreen || carouselIndex * itensOnScreen + index >= maxItemsPerCarousel)
                     item.classList.add('inactive')
                 else
                     item.classList.add('active')
             })
+
+            if (carouselElement.querySelector(carouselItemQuerySelectorName + '.active') == null)
+                carouselElement.classList.add('inactive')
+            else
+                carouselElement.classList.add('active')
         })
+
+        let activeCarousel = section.querySelectorAll(carouselQuerySelectorName + '.active')
+
+        carouselProgressItem.forEach((progressIndicator, index) => {
+
+            if (index >= activeCarousel.length)
+                progressIndicator.classList.add('inactive')
+        })
+
+        section.style.setProperty('--carousel-item-height', carouselItemHeight)
+
     })
 }
 
-function SwipeCarousel(carouselSectionQuerySelector, value) {
+function MoveCarousel(carouselSectionQuerySelector, value) {
 
     if (!timerOut)
         return
@@ -105,7 +125,7 @@ function SwipeCarousel(carouselSectionQuerySelector, value) {
     timerOut = false;
     carouselSection = document.querySelector(carouselSectionQuerySelector)
     carouselWrapper = carouselSection.querySelector(carouselWrapperQuerySelectorName)
-    carousel = carouselWrapper.querySelectorAll(carouselQuerySelectorName)
+    carousel = carouselWrapper.querySelectorAll(carouselQuerySelectorName + '.active')
     carouselProgressItem = carouselSection.querySelectorAll(carouselProgressItemQuerySelectorName)
 
     const disabledControl = document.querySelector(carouselSectionQuerySelector + ' .disable')
@@ -129,8 +149,17 @@ function SwipeCarousel(carouselSectionQuerySelector, value) {
         let currentIndex = parseInt(computedStyle.getPropertyValue('--current-index')) + value;
 
         element.classList.remove('instant')
+        // let endOfList = Math.floor(carousel.length / 2)
         let endOfList = Math.floor(carousel.length / 2)
-        if (Math.abs(currentIndex) > endOfList) {
+
+        if (carousel.length % 2 != 0 && Math.abs(currentIndex) > endOfList) {
+            Reorder();
+        }
+        if (carousel.length % 2 == 0 && Math.abs(currentIndex) >= endOfList) {
+            Reorder();
+        }
+
+        function Reorder() {
             currentIndex = currentIndex > 0 ? -endOfList + lastPick : endOfList - lastPick;
             lastPick++
             element.classList.add('instant')
@@ -149,6 +178,63 @@ function SwipeCarousel(carouselSectionQuerySelector, value) {
     }, 300);
 }
 
+
+// ======================= SWYPER ======================= //
+
+let isDown = false;
+let startY;
+let startX;
+let endY;
+let endX;
+
+let offsetY = 80;
+let offsetX = 20;
+
+
+function FakeSwype() {
+    const swyperSections = document.querySelectorAll(carouselSectionQuerySelectorName)
+
+
+    swyperSections.forEach((section, sectionIndex) => {
+
+        const swyperWrappers = section.querySelector(carouselWrapperQuerySelectorName)
+        swyperWrappers.addEventListener('touchstart', e => {
+            isDown = true;
+            startX = e.changedTouches[0].pageX;
+            startY = e.changedTouches[0].pageY;
+        })
+
+        swyperWrappers.addEventListener('ontouchleave', e => {
+
+            if (!isDown) return;
+            isDown = false;
+            endX = startX = endY = startY = 0;
+        })
+
+        swyperWrappers.addEventListener('touchend', e => {
+
+            if (!isDown) return;
+            isDown = false;
+            endX = e.changedTouches[0].pageX;
+            endY = e.changedTouches[0].pageY;
+
+            let sectionQuery = '.' + section.classList[section.classList.length - 1];
+
+            if (Math.abs(endY - startY) <= offsetY && Math.abs(endX - startX) >= offsetX) {
+                if (endX > startX && swyperWrappers.querySelector('.carousel-control.disable') == null) {
+                    MoveCarousel(sectionQuery, 1)
+                }
+                if (endX < startX) {
+                    MoveCarousel(sectionQuery, -1)
+                }
+            }
+            endX = startX = endY = startY = 0;
+        })
+
+    })
+}
+
+
 // ======================= HEADER INFO ======================= //
 
 const headerImageQuerySelector = '.bg-img';
@@ -158,13 +244,14 @@ const headerOverviewQuerySelector = '.header-description';
 const headerImg = document.querySelector(headerImageQuerySelector);
 const headerTitle = document.querySelector(headerTitleQuerySelector);
 const headerDesc = document.querySelector(headerOverviewQuerySelector);
+
+const smallBanner = false;
+
 let currentMovie;
 
 
 function LoadImages() {
     setTimeout(() => {
-
-
         allCarouselSection.forEach((section) => {
             carouselItems = section.querySelectorAll(carouselItemQuerySelectorName + '.active')
 
@@ -175,15 +262,14 @@ function LoadImages() {
                         let banner = categories[1][index].movieSmallBanner;
                         let poster = categories[1][index].moviePoster;
                         item.addEventListener('click', function () { LoadInfo(1, index) })
-                        itemImg.src = banner != null ? banner : poster;
+                        itemImg.src = banner != null && smallBanner ? banner : poster;
                     }
 
                     if (section.classList.contains(marvelCarouselTag)) {
                         let banner = categories[0][index].movieSmallBanner;
                         let poster = categories[0][index].moviePoster;
                         item.addEventListener('click', function () { LoadInfo(0, index) })
-                        // item.innerHTML = 'escre';
-                        itemImg.src = banner != null ? banner : poster;
+                        itemImg.src = banner != null && smallBanner ? banner : poster;
                     }
                 }
             })
@@ -202,3 +288,4 @@ function LoadInfo(catIndex, movieIndex) {
 
 RefreshWindowSize();
 LoadImages();
+FakeSwype();
