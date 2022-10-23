@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetMovies</title>
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://kit.fontawesome.com/e191a69187.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header id="header">
+        <div class="header-bg bg-img"></div>
+        <div class="container netflix-logo"></div>
+        <div class="header-bg bg-black"></div>
+        <div class="container header-text">
+            <h1 class="header-title"></h1>
+            <p class="header-description"></p>
+        </div>
+    </header>
+    <section class="section-carousel carousel-my-list" id="mylist">
+        <div class="container carousel-header">
+            <h2 class="carousel-title">Minha Lista</h2>
+            <div class="carousel-indicator">
+                <div class="progress-item active"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+            </div>
+        </div>
+        <div class="container carousel-wrapper">
+            <div class="carousel-control left disable" onclick="SwipeCarousel('.carousel-my-list', 1)"><i
+                    class="fa-solid fa-chevron-left"></i></div>
+            <div class="carousel-control right" onclick="SwipeCarousel('.carousel-my-list', -1)"><i
+                    class="fa-solid fa-chevron-right"></i></div>
+            <div class="carousel" style="--current-index:0">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:1">
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:2">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:3">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:4">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-carousel carousel-recommended" id="recommended">
+        <div class="container carousel-header">
+            <h2 class="carousel-title">Recomendados</h2>
+            <div class="carousel-indicator">
+                <div class="progress-item active"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+            </div>
+        </div>
+        <div class="container carousel-wrapper">
+            <div class="carousel-control left disable" onclick="SwipeCarousel('.carousel-recommended', 1)"><i
+                    class="fa-solid fa-chevron-left"></i></div>
+            <div class="carousel-control right" onclick="SwipeCarousel('.carousel-recommended', -1)"><i
+                    class="fa-solid fa-chevron-right"></i></div>
+            <div class="carousel" style="--current-index:0">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:1">
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:2">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:3">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+            <div class="carousel" style="--current-index:4">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/210?text=1" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=2" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=3" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=4" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=5" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=6" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=7" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/210?text=8" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
