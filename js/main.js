@@ -13,16 +13,16 @@ let marvelCarouselTag = 'carousel-my-list';
 
 const categories = []
 
-function GetData(url) {
+async function GetData(url, catIndex) {
 
-    fetch(url + language)
+    await fetch(url + language)
         .then(res => res.json())
         .then(data => {
-            GetMoviesFromData(data.results);
+            GetMoviesFromData(data.results, catIndex);
         });
 };
 
-function GetMoviesFromData(data) {
+function GetMoviesFromData(data, catIndex) {
     let movies = [];
     data.forEach((movie) => {
         movies.push({
@@ -33,13 +33,10 @@ function GetMoviesFromData(data) {
             movieSmallBanner: smallBannerUrlPath + movie.backdrop_path,
         })
     })
-    categories.push(movies);
-
+    categories[catIndex] = movies;
 }
-GetData(apiSearchUrl + 'marvel');
-setTimeout(() => {
-    GetData(apiPopularUrl);
-}, 40);
+GetData(apiSearchUrl + 'marvel', 0);
+GetData(apiPopularUrl, 1).finally(LoadImages);
 
 // ======================= CAROUSEL ======================= //
 
@@ -251,30 +248,28 @@ let currentMovie;
 
 
 function LoadImages() {
-    setTimeout(() => {
-        allCarouselSection.forEach((section) => {
-            carouselItems = section.querySelectorAll(carouselItemQuerySelectorName + '.active')
+    allCarouselSection.forEach((section) => {
+        carouselItems = section.querySelectorAll(carouselItemQuerySelectorName + '.active')
 
-            carouselItems.forEach((item, index) => {
-                if (!item.classList.contains('inactive')) {
-                    let itemImg = item.querySelector('img');
-                    if (section.classList.contains(popularCarouselTag)) {
-                        let banner = categories[1][index].movieSmallBanner;
-                        let poster = categories[1][index].moviePoster;
-                        item.addEventListener('click', function () { LoadInfo(1, index) })
-                        itemImg.src = banner != null && smallBanner ? banner : poster;
-                    }
-
-                    if (section.classList.contains(marvelCarouselTag)) {
-                        let banner = categories[0][index].movieSmallBanner;
-                        let poster = categories[0][index].moviePoster;
-                        item.addEventListener('click', function () { LoadInfo(0, index) })
-                        itemImg.src = banner != null && smallBanner ? banner : poster;
-                    }
+        carouselItems.forEach((item, index) => {
+            if (!item.classList.contains('inactive')) {
+                let itemImg = item.querySelector('img');
+                if (section.classList.contains(popularCarouselTag)) {
+                    let banner = categories[1][index].movieSmallBanner;
+                    let poster = categories[1][index].moviePoster;
+                    item.addEventListener('click', function () { LoadInfo(1, index) })
+                    itemImg.src = banner != null && smallBanner ? banner : poster;
                 }
-            })
-        });
-    }, 600);
+
+                if (section.classList.contains(marvelCarouselTag)) {
+                    let banner = categories[0][index].movieSmallBanner;
+                    let poster = categories[0][index].moviePoster;
+                    item.addEventListener('click', function () { LoadInfo(0, index) })
+                    itemImg.src = banner != null && smallBanner ? banner : poster;
+                }
+            }
+        })
+    });
 }
 
 function LoadInfo(catIndex, movieIndex) {
@@ -287,5 +282,4 @@ function LoadInfo(catIndex, movieIndex) {
 }
 
 RefreshWindowSize();
-LoadImages();
 FakeSwype();
